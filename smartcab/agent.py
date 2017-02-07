@@ -57,15 +57,8 @@ class LearningAgent(Agent):
             self.alpha = 0
             self.epsilon = 0
         else:
-            #self.epsilon = self.epsilon - 0.05 # Old Epsilon Decay
-            #self.epsilon = self.alpha ** self.n_trial # Decaying Epsilon
-            #self.epsilon = .95 ** self.n_trial # Decaying Epsilon
-            #self.epsilon = self.epsilon * .98
-            #self.epsilon = (200 - 1.05**self.n_trial)
-            #self.epsilon = 1/(math.pow(self.n_trial,1/1.1)) # bad
-            # 1-.99e^(-e^(-0.03(x-100)))  THIS SHOULD WORK
             self.epsilon = 1 - 0.99 * math.e ** ( -math.e ** (-0.03 *(self.n_trial - 150)))
-            #self.aplha = .5 - 0.99 * math.e ** ( -math.e ** (-0.07 *(self.n_trial - 150)))
+
 
         self.gamma = 0           # Discount factor
         self.prev_state = None   # State the agent was in previously
@@ -95,11 +88,11 @@ class LearningAgent(Agent):
 
 
         inputs["waypoint"] = waypoint
-        del inputs['right'] #important for right forward if the is something
+        del inputs['right']
+        del inputs['left']
         self.state = inputs
         state = tuple(inputs.values())
-        # The tuple is ordered as (light, oncoming, waypoint, left)
-        # {'light': 'red', 'oncoming': None, 'waypoint': 'left', 'left': None}
+
 
         return state
 
@@ -121,9 +114,9 @@ class LearningAgent(Agent):
             for actions in self.valid_actions:
                 if maxQ_value < self.Q[state][actions]:
                     maxQ_value = self.Q[state][actions]
-            #maxQ_value.append(self.Q[state][maxQ_action])
 
-        print "MAX_Q: " + str(maxQ_value)
+
+
         return maxQ_value
 
 
@@ -180,10 +173,6 @@ class LearningAgent(Agent):
                 if (len(best_actions) > 0):
                     action = random.choice(best_actions)
 
-        print "The action taken was: " + str(action)
-        #print "Dictionary\n"
-        #print self.Q
-        #action = self.next_waypoint
         return action
 
 
@@ -201,8 +190,6 @@ class LearningAgent(Agent):
         self.createQ(next_state)
 
         if (self.learning):
-           # self.Q[state][action] = (1-self.alpha) * self.Q[state][action] + self.alpha * reward
-           # self.Q[state][action] = (1-self.alpha) * self.Q[state][action] + (reward*self.alpha)
            self.Q[state][action] = (1-self.alpha) * self.Q[state][action] + (self.alpha) * ( reward  + self.get_maxQ(next_state))
 
 
