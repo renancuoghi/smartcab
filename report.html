@@ -11899,9 +11899,9 @@ div#notebook {
 <p><strong>Answer:</strong><br/>
 <strong> agent.py: </strong><br/></p>
 
-<pre><code>- build_state: this method brings next waypoint, the intersection inputs, and the deadline are all features available to the agent, when we change this function will change the smartcab moviment.   
-- choose_action: is called when the agent is asked to choose which action to take, so this function influince which command the smartcab will do, if it'll move on or stop.
-- learn: this method is called after the agent completes an action and receives an award, this method will  change complety the future actions (decision making) of the smartcab in the simulation.
+<pre><code>- learning: this flag active the Q-learning, this is used to the smartcab learn during the simulation.
+- update_delay: this is a number used to select the speed of simulation, small value is slower.
+- alpha: this is a number used to calculate a reward when the smartcab is learning, it affects the learning of the smartcab.
 
 </code></pre>
 <p><strong> environment.py:</strong> The function called is act. <br/>
@@ -13137,7 +13137,7 @@ yqwAAAAASUVORK5CYII=
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>Answer:</strong> The size of space would be 18 for this 3 features: light (red,green),oncoming (left,right and None) and waypoint(left, right and forward). Yes, because the enviroment has few of states and actions, so it's a simple policy function.</p>
+<p><strong>Answer:</strong> The size of space would be 24 for this 3 features: light (red,green),oncoming (left,right,forward and None) and waypoint(left, right and forward). Yes, because the enviroment has few of states and actions, so it's a simple policy function.</p>
 
 </div>
 </div>

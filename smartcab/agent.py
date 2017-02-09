@@ -88,11 +88,9 @@ class LearningAgent(Agent):
         #   For each action, set the Q-value for the state-action pair to 0
 
 
-        inputs["waypoint"] = waypoint
-        del inputs['right']
-        del inputs['left']
-        self.state = inputs
-        state = tuple(inputs.values())
+
+        state = (waypoint, inputs['oncoming'], inputs['light'])
+
 
 
         return state
